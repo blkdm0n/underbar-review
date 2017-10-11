@@ -118,14 +118,17 @@
       });
     }
     var uniqArr = [];
+    var tempArr = [];
     for (var i = 0; i < array.length; i++) {
-      if (array[i] < array[i + 1] || i === array.length - 1) {
-        if (iterator !== undefined) {
-          uniqArr.push(iterator(array[i]));
-        } else {
+      if (iterator !== undefined) {
+        if (!tempArr.includes(iterator(array[i]))) {
+          tempArr.push(iterator(array[i]));
           uniqArr.push(array[i]);
         }
-      } 
+      } else if (!uniqArr.includes(array[i])) {
+        uniqArr.push(array[i]);
+      }
+      
     }
     return uniqArr;
   };
@@ -136,6 +139,13 @@
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
+
+    var results = [];
+    console.log(iterator);
+    _.each(collection, function (val) {
+      results.push(iterator(val));
+    });
+    return results;
   };
 
   /*
